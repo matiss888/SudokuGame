@@ -1,0 +1,20 @@
+Visual part
+    Make a window.
+    Make window divided in 9 pieces.
+    Divide 9 pieces into smaller 9 pieces.
+
+Making game logic
+    Rows and columns should contain numbers 1 - 9 and they cant repeat.
+    Small 3x3 cubes should aswell only contain numbers from 1 - 9.
+    Some numbers are autofilled (Should be bolded or diff color).
+    Most numbers are filled by Player (Should be different from given numbers).
+    If player puts the number which is already there, then make the row or column diff color.
+
+
+One sudoku cell
+    Contains number from 1 - 9.
+    Is given or needs to be filled.
+    
+    
+
+
