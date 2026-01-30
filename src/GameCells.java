@@ -1,10 +1,5 @@
 public class GameCells {
 
-    // GameCells glabā:
-    // vienu ciparu (vai neko)
-    // vai šobrīd ir kļūda
-    // vai to drīkst mainīt
-
     private int number;
 
     public GameCells() {
