@@ -8,6 +8,7 @@ public class SudokuGrid {
 
     int[][] startingNumbers = new int[9][9];
 
+    // Setting sudoku starting numbers to already be filled
     public SudokuGrid() {
         startingNumbers[0][0] = 9;
         startingNumbers[0][1] = 3;
@@ -68,6 +69,7 @@ public class SudokuGrid {
         return true;
     }
 
+    // Checking if this number can be placed in the same row
     public boolean canBePlacedOnRow(int row, int number) {
         for (int i = 0; i < 9; i++) {
             if (gameGrid[row][i].getNumber() == number) {
@@ -77,6 +79,7 @@ public class SudokuGrid {
         return true;
     }
 
+    // Checking if this number can be placed in the same col
     public boolean canBePlacedOnCol(int col, int number) {
         for (int i = 0; i < 9; i++) {
             if (gameGrid[i][col].getNumber() == number) {
@@ -86,6 +89,7 @@ public class SudokuGrid {
         return true;
     }
 
+    // Checking if where i am placing number is an empty cell or not
     public boolean thisCellIsEmpty(int row, int col) {
         if (gameGrid[row][col].getNumber() == 0) {
             return true;
