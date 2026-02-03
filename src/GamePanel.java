@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -30,8 +31,6 @@ public class GamePanel extends JPanel {
     public GamePanel(SudokuGrid grid) {
         this.sudokuGrid = grid;
         sudokuGrid.fillTheGrid();
-        setFocusable(true);
-        requestFocusInWindow();
 
         // Keyboard input when I select game cell.
         setFocusable(true);
@@ -40,6 +39,8 @@ public class GamePanel extends JPanel {
         addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
             public void keyTyped(java.awt.event.KeyEvent e) {
+                // Do this if incase no selected cells and game doesnt crash for out of bound
+                // error since -1, -1.
                 if (selectedRow == -1 || selectedCol == -1)
                     return;
 
@@ -48,12 +49,23 @@ public class GamePanel extends JPanel {
                 // Entering a number from 1 - 9
                 if (c >= '1' && c <= '9') {
                     int number = c - '0';
-                    sudokuGrid.gameGrid[selectedRow][selectedCol].setNumber(number);
-                    repaint();
+                    if (sudokuGrid.isValidMove(selectedRow, selectedCol, number)) {
+                        sudokuGrid.gameGrid[selectedRow][selectedCol].setNumber(number);
+                        repaint();
+                    }
                 }
+            }
 
-                // Deleting a number
-                if (c == '0' || c == '\b') {
+            public void keyPressed(java.awt.event.KeyEvent e) {
+                // Do this if incase no selected cells and game doesnt crash for out of bound
+                // error since -1, -1.
+                if (selectedRow == -1 || selectedCol == -1)
+                    return;
+                if (e.getKeyChar() == '\b') {
+                    // System.out.println("pressed");
+                    // System.out.println(e.getKeyChar());
+                    // System.out.println(
+                    // sudokuGrid.gameGrid[selectedRow][selectedCol].getNumber());
                     sudokuGrid.gameGrid[selectedRow][selectedCol].setNumber(0);
                     repaint();
                 }
@@ -88,7 +100,7 @@ public class GamePanel extends JPanel {
         g.fillRect(cellWidth * selectedCol, cellHeight * selectedRow, cellWidth, cellHeight);
     }
 
-    // Drawing horizontal lines on grid
+    // Drawing horizontal lines on grid. Basic stroke 2.0 for biggr lines
     public void drawHorizontalLines(Graphics g) {
         g.setColor(Color.BLACK);
         Graphics2D g2 = (Graphics2D) g;
@@ -96,7 +108,6 @@ public class GamePanel extends JPanel {
             if (i % 3 == 0) {
                 g2.setStroke(new BasicStroke(2.0f));
                 g2.drawLine(0, i * cellHeight, sudokuWidth, i * cellHeight);
-
             } else {
                 g2.setStroke(new BasicStroke(1.0f));
                 g2.drawLine(0, i * cellHeight, sudokuWidth, i * cellHeight);
@@ -135,7 +146,7 @@ public class GamePanel extends JPanel {
         }
     }
 
-    // Calling Paint method with components.
+    // Calling Paint method with methods.
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);

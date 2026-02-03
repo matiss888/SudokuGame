@@ -13,7 +13,7 @@ public class GameCells {
 
     // Setting number to be in range from 1 to 9
     public void setNumber(int number) {
-        if (number >= 1 && number <= 9) {
+        if (number >= 0 && number <= 9) {
             this.number = number;
         }
     }

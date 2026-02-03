@@ -1,11 +1,6 @@
-// import java.awt.Font;
-
-// import javax.swing.JButton;
 
 public class SudokuGrid {
     GameCells[][] gameGrid = new GameCells[9][9];
-    // JButton[][] buttons = new JButton[9][9];
-
     int[][] startingNumbers = new int[9][9];
 
     // Setting sudoku starting numbers to already be filled
@@ -40,16 +35,8 @@ public class SudokuGrid {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 gameGrid[i][j] = new GameCells();
-                // buttons[i][j] = new JButton();
-                // buttons[i][j].setFont(new Font("Serif", Font.BOLD, 30));
-                // int row = i;
-                // int col = j;
-                // buttons[i][j].addActionListener(e -> {
-                // System.out.println("Click on: " + row + ", " + col);
-                // });
                 if (startingNumbers[i][j] != 0) {
                     gameGrid[i][j].setNumber(startingNumbers[i][j]);
-                    // buttons[i][j].setText(startingNumbers.toString());
                 }
             }
         }
@@ -89,9 +76,9 @@ public class SudokuGrid {
         return true;
     }
 
-    // Checking if where i am placing number is an empty cell or not
-    public boolean thisCellIsEmpty(int row, int col) {
-        if (gameGrid[row][col].getNumber() == 0) {
+    // Checking if where i am placing number is an initial cell or not
+    public boolean thisCellIsInitialCell(int row, int col) {
+        if (startingNumbers[row][col] != 0) {
             return true;
         } else {
             return false;
@@ -101,7 +88,7 @@ public class SudokuGrid {
     // Checking if all previous funcs are true and if they are that means number can
     // be placed in this spot.
     public boolean isValidMove(int row, int col, int number) {
-        if (thisCellIsEmpty(row, col) == true &&
+        if (thisCellIsInitialCell(row, col) == false &&
                 canBePlacedOnCol(col, number) == true &&
                 canBePlacedOnRow(row, number) == true &&
                 canBePlacedInSmallCube(row, col, number)) {
@@ -110,9 +97,4 @@ public class SudokuGrid {
             return false;
         }
     }
-    // Sakuma laikam mēģināšu uztaisīt UI
-    // public int placeNumber(int row, int col, int number) {
-
-    // }
-
 }
