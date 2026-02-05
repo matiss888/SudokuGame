@@ -7,7 +7,6 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -79,12 +78,30 @@ public class GamePanel extends JPanel {
                 int y = e.getY();
                 int xCell = x / cellWidth;
                 int yCell = y / cellHeight;
-                System.out.println("Mouse clicked on " + xCell + ", " + yCell);
+                System.out.println("Mouse clicked on " + yCell + ", " + xCell);
                 selectedRow = yCell;
                 selectedCol = xCell;
                 repaint();
             };
         });
+    }
+
+    public void sameNumberAsSelectedCell(Graphics g) {
+        if (selectedRow == -1 || selectedCol == -1) {
+            return;
+        }
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (sudokuGrid.gameGrid[i][j].getNumber() == 0) {
+                    continue;
+                }
+                if (sudokuGrid.gameGrid[i][j].getNumber() == sudokuGrid.gameGrid[selectedRow][selectedCol]
+                        .getNumber()) {
+                    g.setColor(Color.BLUE);
+                    g.fillRect(cellWidth * j, cellHeight * i, cellWidth, cellHeight);
+                }
+            }
+        }
     }
 
     // Select a cell to enter a number and making a cross to see numbers in same row
@@ -106,7 +123,7 @@ public class GamePanel extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
         for (int i = 0; i < 10; i++) {
             if (i % 3 == 0) {
-                g2.setStroke(new BasicStroke(2.0f));
+                g2.setStroke(new BasicStroke(3.0f));
                 g2.drawLine(0, i * cellHeight, sudokuWidth, i * cellHeight);
             } else {
                 g2.setStroke(new BasicStroke(1.0f));
@@ -120,7 +137,7 @@ public class GamePanel extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
         for (int i = 0; i < 10; i++) {
             if (i % 3 == 0) {
-                g2.setStroke(new BasicStroke(2.0f));
+                g2.setStroke(new BasicStroke(3.0f));
                 g2.drawLine(cellWidth * i, 0, cellWidth * i, sudokuHeight);
             } else {
                 g2.setStroke(new BasicStroke(1.0f));
@@ -150,11 +167,11 @@ public class GamePanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        sameNumberAsSelectedCell(g);
         selectedCell(g);
         drawHorizontalLines(g);
         drawVerticalLines(g);
         drawNumbers(g);
-
     }
 
 }

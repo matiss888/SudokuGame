@@ -28,6 +28,12 @@ public class SudokuGrid {
         startingNumbers[6][2] = 3;
         startingNumbers[7][8] = 3;
         startingNumbers[2][3] = 3;
+        startingNumbers[3][4] = 4;
+        startingNumbers[4][4] = 6;
+        startingNumbers[5][4] = 1;
+        startingNumbers[5][3] = 8;
+        startingNumbers[7][4] = 9;
+        startingNumbers[1][8] = 9;
     }
 
     // Filling the grid with numbers or empty spaces (0s)
