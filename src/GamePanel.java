@@ -117,7 +117,7 @@ public class GamePanel extends JPanel {
         g.fillRect(cellWidth * selectedCol, cellHeight * selectedRow, cellWidth, cellHeight);
     }
 
-    // Drawing horizontal lines on grid. Basic stroke 2.0 for biggr lines
+    // Drawing horizontal lines on grid. Basic stroke 3.0 for biggr lines
     public void drawHorizontalLines(Graphics g) {
         g.setColor(Color.BLACK);
         Graphics2D g2 = (Graphics2D) g;
@@ -132,7 +132,7 @@ public class GamePanel extends JPanel {
         }
     }
 
-    // Drawing vertical lines on grid. Basic stroke 2.0 for biggr lines
+    // Drawing vertical lines on grid. Basic stroke 3.0 for biggr lines
     public void drawVerticalLines(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         for (int i = 0; i < 10; i++) {
@@ -148,7 +148,9 @@ public class GamePanel extends JPanel {
 
     // Drawing starting numbers and centering them in the middle of the gamecell
     public void drawNumbers(Graphics g) {
-        g.setFont(new Font("Serif", Font.BOLD, 30));
+        Font boldFont = new Font("Serif", Font.BOLD, 30);
+        Font plainFont = new Font("Serif", Font.PLAIN, 30);
+        g.setFont(new Font("Serif", Font.PLAIN, 30));
         FontMetrics fm = g.getFontMetrics();
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
