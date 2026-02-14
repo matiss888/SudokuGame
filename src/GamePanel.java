@@ -25,6 +25,8 @@ public class GamePanel extends JPanel {
     int selectedCol = -1;
     int topCornerOfCellX = 0;
     int topCornerOfCellY = 0;
+    Font boldFont = new Font("Serif", Font.BOLD, 30);
+    Font plainFont = new Font("Serif", Font.PLAIN, 30);
 
     // Filling the GamePanel with 0s
     public GamePanel(SudokuGrid grid) {
@@ -65,8 +67,10 @@ public class GamePanel extends JPanel {
                     // System.out.println(e.getKeyChar());
                     // System.out.println(
                     // sudokuGrid.gameGrid[selectedRow][selectedCol].getNumber());
-                    sudokuGrid.gameGrid[selectedRow][selectedCol].setNumber(0);
-                    repaint();
+                    if (!sudokuGrid.thisCellIsInitialCell(selectedRow, selectedCol)) {
+                        sudokuGrid.gameGrid[selectedRow][selectedCol].setNumber(0);
+                        repaint();
+                    }
                 }
             }
         });
@@ -146,17 +150,19 @@ public class GamePanel extends JPanel {
         }
     }
 
-    // Drawing starting numbers and centering them in the middle of the gamecell
+    // Drawing numbers and centering them in the middle of the gamecell
     public void drawNumbers(Graphics g) {
-        Font boldFont = new Font("Serif", Font.BOLD, 30);
-        Font plainFont = new Font("Serif", Font.PLAIN, 30);
-        g.setFont(new Font("Serif", Font.PLAIN, 30));
         FontMetrics fm = g.getFontMetrics();
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
                 int number = sudokuGrid.gameGrid[row][col].getNumber();
                 if (number != 0) {
                     String text = Integer.toString(number);
+                    if (sudokuGrid.thisCellIsInitialCell(row, col)) {
+                        g.setFont(boldFont);
+                    } else {
+                        g.setFont(plainFont);
+                    }
                     int x = col * cellWidth + (cellWidth - fm.stringWidth(text)) / 2;
                     int y = row * cellHeight + ((cellHeight - fm.getHeight()) / 2) + fm.getAscent();
                     g.drawString(text, x, y);

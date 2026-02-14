@@ -91,6 +91,38 @@ public class SudokuGrid {
         }
     }
 
+    // Checking if the game is finished and user won if all validations go through.
+    public boolean isGameFinished() {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (gameGrid[i][j].getNumber() == 0) {
+                    return false;
+                }
+            }
+        }
+        for (int i = 0; i < 9; i++) {
+            boolean[] inRow = new boolean[10];
+            for (int j = 0; j < 9; j++) {
+                int currentNumber = gameGrid[i][j].getNumber();
+                if (inRow[currentNumber] == true) {
+                    return false;
+                }
+                inRow[currentNumber] = true;
+            }
+        }
+        for (int i = 0; i < 9; i++) {
+            boolean[] inCol = new boolean[10];
+            for (int j = 0; j < 9; j++) {
+                int currentNumber = gameGrid[i][j].getNumber();
+                if (inCol[currentNumber] == true) {
+                    return false;
+                }
+                inCol[currentNumber] = true;
+            }
+        }
+
+    }
+
     // Checking if all previous funcs are true and if they are that means number can
     // be placed in this spot.
     public boolean isValidMove(int row, int col, int number) {
